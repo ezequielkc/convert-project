@@ -1,7 +1,23 @@
-// Cotação de moedas do dia.
-const USD = 4.87
-const EUR = 5.32
-const GBP = 6.08
+// Função para buscar as cotações do dia
+async function fetchExchangeRates() {
+    try {
+        const response = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,GBP-BRL');
+        const data = await response.json();
+        // Atualiza as variáveis globais com as cotações do dia
+        window.USD = Number(data.USDBRL.bid);
+        window.EUR = Number(data.EURBRL.bid);
+        window.GBP = Number(data.GBPBRL.bid);
+    } catch (error) {
+        alert('Não foi possível obter as cotações do dia. Usando valores padrão.');
+        // Valores padrão caso a API falhe
+        window.USD = 4.87;
+        window.EUR = 5.32;
+        window.GBP = 6.08;
+    }
+}
+
+// Chama a função ao carregar a página
+fetchExchangeRates();
 
 // Obtendo os elementos do Formulário
 const form  = document.querySelector("form")
